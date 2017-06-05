@@ -1,0 +1,16 @@
+dependencies {
+    compile project(":common")
+    compile project(":eventhandler-common")
+    compile project(":todo-dynamodb")
+    compile "io.eventuate.client.java:eventuate-client-java-common-impl:$eventuateClientVersion"
+}
+
+task buildZip(type: Zip) {
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtime
+    }
+}
+
+build.dependsOn buildZip

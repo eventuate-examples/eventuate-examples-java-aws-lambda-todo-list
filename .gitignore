@@ -1,0 +1,9 @@
+.gradle
+build/
+*.idea/
+*.iml
+*.log
+
+*.serverless/
+*.serverless_plugins/
+node_modules

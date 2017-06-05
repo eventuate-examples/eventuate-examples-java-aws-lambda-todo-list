@@ -1,0 +1,23 @@
+{
+  "name": "eventuate-examples-java-aws-lambda-todo-list",
+  "version": "1.0.0",
+  "description": "AWS Lambda, Serverless framework version of the Eventuate Todo List application",
+  "main": "index.js",
+  "dependencies": {
+    "eventuate-aws-gateway-serverless-plugin": "0.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eventuate-examples/eventuate-examples-java-aws-lambda-todo-list"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/eventuate-examples/eventuate-examples-java-aws-lambda-todo-list/issues"
+  },
+  "homepage": "https://github.com/eventuate-examples/eventuate-examples-java-aws-lambda-todo-list"
+}

@@ -1,0 +1,93 @@
+service: eventuate-examples-aws-todo-list
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: java8
+  timeout: 10
+  stage: dev
+  environment:
+    EVENTUATE_API_KEY_ID: ${env:EVENTUATE_API_KEY_ID}
+    EVENTUATE_API_KEY_SECRET: ${env:EVENTUATE_API_KEY_SECRET}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:BatchWriteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/todo_records"
+
+functions:
+  findTodo:
+    handler: net.chrisrichardson.eventstore.examples.todolist.findlambda.FindTodoLambda
+    package:
+      artifact: todo-find-lambda/build/distributions/todo-find-lambda.zip
+    events:
+      - http:
+          path: /todos/{todoId+}
+          method: get
+          cors: true
+      - http:
+          path: /todos
+          method: get
+          cors: true
+
+  commandsideTodoLambda:
+    handler: net.chrisrichardson.eventstore.examples.todolist.commandside.CommandsideTodoLambda
+    package:
+      artifact: todo-commandside-lambda/build/distributions/todo-commandside-lambda.zip
+    events:
+      - http:
+          path: /todos
+          method: post
+      - http:
+          path: /todos/{todoId+}
+          method: put
+      - http:
+          path: /todos/{todoId+}
+          method: delete
+      - http:
+          path: /todos
+          method: delete
+
+  querysideTodoLambda:
+    handler: net.chrisrichardson.eventstore.examples.todolist.queryside.QuerysideTodoLambda
+    package:
+      artifact: todo-queryside-lambda/build/distributions/todo-queryside-lambda.zip
+    events:
+      - eventuate:
+          subscriberId: todoSampleLambdaEventHandler
+          space: default
+          entitiesAndEventTypes:
+            net.chrisrichardson.eventstore.examples.todolist.todoservice.backend.domain.TodoAggregate:
+              - net.chrisrichardson.eventstore.examples.todolist.common.event.TodoCreatedEvent
+              - net.chrisrichardson.eventstore.examples.todolist.common.event.TodoUpdatedEvent
+              - net.chrisrichardson.eventstore.examples.todolist.common.event.TodoDeletedEvent
+
+resources:
+  Resources:
+    TodosDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: todo_records
+
+plugins:
+  - eventuate-aws-gateway-serverless-plugin

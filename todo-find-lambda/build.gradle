@@ -1,0 +1,16 @@
+dependencies {
+    compile project(":common")
+    compile project(":todo-dynamodb")
+    compile "com.amazonaws:aws-lambda-java-core:1.1.0"
+    compile "org.springframework.boot:spring-boot:$springBootVersion"
+}
+
+task buildZip(type: Zip) {
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtime
+    }
+}
+
+build.dependsOn buildZip

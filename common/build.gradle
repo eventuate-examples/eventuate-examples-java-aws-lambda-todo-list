@@ -1,0 +1,5 @@
+dependencies {
+    compile "io.eventuate.client.java:eventuate-client-java-spring:$eventuateClientVersion"
+    compile "com.amazonaws:aws-lambda-java-core:1.1.0"
+    testCompile 'junit:junit:4.11'
+}

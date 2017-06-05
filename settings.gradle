@@ -1,0 +1,11 @@
+rootProject.name = 'eventuate-examples-java-aws-lambda-todo-list'
+include 'common'
+include 'todo-command-side'
+include 'test-utils'
+include 'e2etest'
+include 'eventhandler-common'
+include 'todo-dynamodb'
+include 'todo-find-lambda'
+include 'todo-commandside-lambda'
+include 'todo-queryside-lambda'
+

@@ -1,0 +1,6 @@
+dependencies {
+    compile project(":common")
+    compile "io.eventuate.client.java:eventuate-client-java-spring:$eventuateClientVersion"
+
+    testCompile "junit:junit:4.11"
+}

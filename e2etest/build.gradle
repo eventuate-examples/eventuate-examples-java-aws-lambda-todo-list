@@ -1,0 +1,22 @@
+apply plugin: 'java'
+
+dependencies {
+    compile project(":todo-dynamodb")
+    testCompile "com.amazonaws:aws-java-sdk-dynamodb:$awsJavaSdkVersion"
+    testCompile "org.apache.httpcomponents:httpclient:4.5"
+    testCompile project(":test-utils")
+    testCompile "junit:junit:4.11"
+    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+}
+
+test {
+    ignoreFailures(!project.hasProperty("ignoreE2EFailures") || ignoreE2EFailures.toBoolean())
+
+    beforeSuite { x ->
+        if (x.parent == null) {
+            logger.warn('These tests will fail unless AWS_GATEWAY_API_INVOKE_URL is set, the Todo lambdas are running and AGI Gateway endpoints are deployed')
+            logger.warn("But don't worry the build is configured to ignore the failure")
+        }
+    }
+
+}

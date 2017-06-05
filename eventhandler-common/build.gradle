@@ -1,0 +1,6 @@
+dependencies {
+    compile project(":common")
+    compile "com.amazonaws:aws-lambda-java-core:1.1.0"
+    compile "io.eventuate.client.java:eventuate-client-java:$eventuateClientVersion"
+    compile "org.springframework.boot:spring-boot:$springBootVersion"
+}
