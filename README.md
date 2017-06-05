@@ -7,7 +7,7 @@ This example illustrates how you can use develop an application with a [microser
 * The [Eventuate&trade; Platform](http://eventuate.io) for [Event Sourcing](http://microservices.io/patterns/data/event-sourcing.html) and [Command Query Responsibility Segregation (CQRS)](http://microservices.io/patterns/data/cqrs.html).
 * [AWS Lambda](https://aws.amazon.com/lambda/)
 * [Serverless framework](https://serverless.com/)
-* The [Eventuate AWS Gateway Plugin](https://github.com/shopcookeat/eventuate-aws-gateway-serverless-plugin), which enables a serverless lambda to subscribe to Eventuate events.
+* The [Eventuate AWS Gateway Plugin](https://github.com/eventuate-clients/eventuate-aws-gateway-serverless-plugin), which enables a serverless lambda to subscribe to Eventuate events.
 
 # Building the application
 
